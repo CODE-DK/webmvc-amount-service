@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  # APP
+  demo-app:
+    build: .
+    container_name: demo-app
+    restart: unless-stopped
+    environment:
+      DB_HOST: demo-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASS: postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - demo-db
+  # DATABASE
+  demo-db:
+    image: postgres:10.2
+    container_name: demo-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: demo-db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.volume/postgres:/data/postgres
