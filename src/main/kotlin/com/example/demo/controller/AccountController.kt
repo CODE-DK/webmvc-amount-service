@@ -4,6 +4,7 @@ import com.example.demo.entity.Account
 import com.example.demo.service.AccountService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.net.URI
 
 @RestController
 @RequestMapping(path = ["/api/v1"])
@@ -23,9 +24,9 @@ class AccountController(private val accountService: AccountService) {
 
     @PostMapping(path = ["/accounts"])
     fun newAccount(@RequestBody account: Account): ResponseEntity<Account> {
-        return ResponseEntity.ok(accountService.saveAccount(account))
+        val saveAccount = accountService.saveAccount(account)
+        return ResponseEntity.created(URI.create("/api/v1/accounts/${saveAccount.id}")).build()
     }
 
-    private fun <T> noContent(): ResponseEntity<T> =
-        ResponseEntity.noContent().build()
+    private fun <T> noContent(): ResponseEntity<T> = ResponseEntity.noContent().build()
 }

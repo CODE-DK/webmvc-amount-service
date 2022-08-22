@@ -31,6 +31,7 @@ dependencies {
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     // TESTING
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    runtimeOnly("com.h2database:h2")
 }
 
 tasks.withType<KotlinCompile> {
